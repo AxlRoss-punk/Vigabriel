@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RRHH - Marcaciones de Personal</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>Gestión de Marcaciones - Recursos Humanos</h1>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2 id="form-titulo">Registrar marcación</h2>
+      <form id="form-marcacion">
+        <input type="hidden" id="marcacion-id" />
+
+        <label>Código de empleado
+          <input type="text" id="codigo_empleado" required />
+        </label>
+
+        <label>Nombre completo
+          <input type="text" id="nombre_empleado" required />
+        </label>
+
+        <label>Fecha
+          <input type="date" id="fecha" required />
+        </label>
+
+        <label>Hora programada de ingreso
+          <input type="time" id="hora_ingreso_programada" />
+        </label>
+
+        <label>Hora real de ingreso
+          <input type="time" id="hora_ingreso_real" required />
+        </label>
+
+        <label>Hora programada de salida
+          <input type="time" id="hora_salida_programada" />
+        </label>
+
+        <label>Hora real de salida
+          <input type="time" id="hora_salida_real" />
+        </label>
+
+        <label>Observación
+          <input type="text" id="observacion" />
+        </label>
+
+        <div class="acciones-form">
+          <button type="submit" id="btn-guardar">Registrar</button>
+          <button type="button" id="btn-cancelar" style="display:none;">Cancelar edición</button>
+        </div>
+      </form>
+      <p id="mensaje" class="mensaje"></p>
+    </section>
+
+    <section class="card">
+      <h2>Filtrar marcaciones</h2>
+      <div class="filtros">
+        <label>Por empleado
+          <input type="text" id="filtro-empleado" placeholder="EMP001" />
+        </label>
+        <label>Por fecha
+          <input type="date" id="filtro-fecha" />
+        </label>
+        <button id="btn-filtrar">Filtrar</button>
+        <button id="btn-limpiar-filtro">Ver todas</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Marcaciones registradas</h2>
+      <table id="tabla-marcaciones">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Empleado</th>
+            <th>Nombre</th>
+            <th>Fecha</th>
+            <th>Ingreso prog.</th>
+            <th>Ingreso real</th>
+            <th>Salida prog.</th>
+            <th>Salida real</th>
+            <th>Estado</th>
+            <th>Observación</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="tabla-body">
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+services:
+  database:
+    image: postgres:16-alpine
+    container_name: rrhhmarc-database
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks:
+      - rrhhmarc-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  api:
+    build: ./api
+    container_name: rrhhmarc-api
+    environment:
+      DB_HOST: database
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+    depends_on:
+      database:
+        condition: service_healthy
+    ports:
+      - "4000:3000"
+    networks:
+      - rrhhmarc-net
+    restart: unless-stopped
+
+  web:
+    build: ./web
+    container_name: rrhhmarc-web
+    depends_on:
+      - api
+    ports:
+      - "8080:80"
+    networks:
+      - rrhhmarc-net
+
+networks:
+  rrhhmarc-net:
+    driver: bridge
+
+volumes:
+  db_data:
